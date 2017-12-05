@@ -415,6 +415,10 @@
             document.title = 'Reportes';
             this.getReproduccionesAllEmpresas();
             $('.ui.dropdown').dropdown();
+            google.charts.load('current', {
+                'packages': ['geochart'],
+                'mapsApiKey': googleMaps.token
+            });
         },
         methods: {
             getReproduccionesAllEmpresas() {
