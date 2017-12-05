@@ -16,7 +16,8 @@ export const store = new Vuex.Store({
         },
         autenticado: false,
         suscripto: false,
-        baseUrl: 'https://papervue.jelastic.saveincloud.net/web/api',
+        //baseUrl: 'http://localhost:8080/web/api/',
+        baseUrl: 'https://191.243.199.172/web/api/',
         contenidosDestacados: [],
         contenidoActual: {
             id: '',

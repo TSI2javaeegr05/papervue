@@ -97,7 +97,7 @@
                         <div class="ui fluid labeled input" style="padding: 10px">
                             <div class="ui basic label">Tipo</div>
                             <select id="tipo" v-model="tipo" class="ui fluid dropdown" style="width: 100%">
-                                <option v-for="tipo in tiposList" :value="tipo.nombre">{{ tipo.nombre }}</option>
+                                <option v-for="tipo in tiposList" :value="tipo">{{ tipo }}</option>
                                 <option value="" selected disabled>Seleccione un tipo...</option>
                             </select>
                         </div>
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ui secondary menu">
+                <div class="ui secondary menu" style="margin: 0; padding: 10px">
                     <div class="ui tag icon small labels">
                         <div v-show="tipoFiltro !== ''" class="ui label paperviu-sky"
                              style="background-color: #f1f5f9">
@@ -199,8 +199,14 @@
             cargarTiposURL() {
                 return this.$store.state.baseUrl + "tipos?filtro=&pagina=" + this.paginaTipos;
             },
+            listarAllTiposURL() {
+                return this.$store.state.baseUrl + "tipos/all";
+            },
             listarContenidosURL() {
                 return this.$store.state.baseUrl + "contenidos?contenido=" + this.filtro + "&tipo=" + this.tipoFiltro + "&categoria=" + this.categoriaFiltro + "&pagina=" + this.pagina + "&empresa=" + this.empresa.nombre + "&empresaLike=false";
+            },
+            tiposList() {
+                return this.$store.state.tipos;
             },
             crearContenidoURL() {
                 return this.$store.state.baseUrl + "contenidos?titulo=" + this.titulo + "&empresa=" + this.empresa.nombre + "&tipo=" + this.tipo;
@@ -218,6 +224,7 @@
             this.$store.commit('setContenidosList', []);
             $('.ui.dropdown').dropdown();
             $('.ui.accordion').accordion();
+            this.listarTipos();
         },
         methods: {
             infiniteHandler($state) {
@@ -297,6 +304,7 @@
                             if (response.length >= 1) {
                                 $.each(response, function (index, tipo) {
                                     _this.tipos.push(tipo.nombre);
+                                    _this.$store.commit('agregarTipo', tipo.nombre);
                                 });
                                 $state.loaded();
                                 _this.paginaTipos += 1;
@@ -304,6 +312,16 @@
                         } else $state.complete();
                     });
                 }, 1000);
+            },
+            listarTipos() {
+                var _this = this;
+                $.get(this.listarAllTiposURL, function (response) {
+                    if (response !== undefined) {
+                        $.each(response, function (index, tipo) {
+                            _this.$store.commit("agregarTipo", tipo.nombre);
+                        });
+                    }
+                });
             },
             resetCategorias() {
                 if (this.categorias.length === 0) {
@@ -323,10 +341,8 @@
                 else {
                     this.mostrarCreandoContenido();
                     $.post(this.crearContenidoURL, function (response) {
-                        if (response !== undefined) {
-                            if (response > 0) _this.crearCarpetaDropbox(response);
-                            else _this.mostrarErrorCrearContenido();
-                        } else _this.mostrarErrorCrearContenido();
+                        if (response > 0 || Number(response) > 0) _this.crearCarpetaDropbox(response);
+                        else _this.mostrarErrorCrearContenido();
                     }).fail(function () {
                         _this.mostrarErrorCrearContenido();
                     });

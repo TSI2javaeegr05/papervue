@@ -10,7 +10,8 @@ export const store = new Vuex.Store({
         tokenUsr: '',
         nombreEmpresa: '',
         vistaActual: 'Inicio',
-        baseUrl: 'https://papervue.jelastic.saveincloud.net/web/api'
+        //baseUrl: 'http://localhost:8080/web/api/',
+        baseUrl: 'https://191.243.199.172/web/api/'
     },
     mutations: {
         setAutenticado(state, estado) {

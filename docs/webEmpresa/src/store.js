@@ -16,10 +16,12 @@ export const store = new Vuex.Store({
         username: '',
         vistaActual: 'Inicio',
         contenidosList: [],
-        baseUrl: 'https://papervue.jelastic.saveincloud.net/web/api',
+        //baseUrl: 'http://localhost:8080/web/api/',
+        baseUrl: 'https://191.243.199.172/web/api/',
         contenidosModList: [],
         videoNuevo: {},
-        categorias: []
+        categorias: [],
+        tipos: []
     },
     mutations: {
         setVideoNuevo(state, video) {
@@ -51,6 +53,9 @@ export const store = new Vuex.Store({
         },
         agregarCategoria(state, categoria) {
             if (state.categorias.indexOf(categoria) === -1) state.categorias.push(categoria);
+        },
+        agregarTipo(state, tipo) {
+            if (state.tipos.indexOf(tipo) === -1) state.tipos.push(tipo);
         }
     }
 });
