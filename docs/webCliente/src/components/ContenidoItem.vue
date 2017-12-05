@@ -34,7 +34,7 @@
                     <a :id="id + 'popupBtn'" @click="popupCompartir(id + 'popupBtn', id + 'popup')"
                        class="ui item text-paperviu-63 hover-text-paperviu-sky" style="margin: 0; padding-left: 0"><i
                             class="share large icon"></i></a>
-                    <div @click="compartirFacebook" v-if="usuario.facebook" class="ui item"
+                    <div @click="compartirFacebook" class="ui item"
                          style="margin: 0; padding-left: 0">
                         <i class="external share text-paperviu-d7 large link icon"></i>
                     </div>
@@ -160,14 +160,10 @@
             },
             compartirFacebook() {
                 var _this = this;
-                FB.getLoginStatus(function (response) {
-                    if (response['status'] === 'connected') {
-                        FB.ui({
-                            method: 'share',
-                            href: 'https://bruno-full-name.github.io/papervue/webCliente/#/',
-                        }, function (response) {});
-                    }
-                });
+                FB.ui({
+                    method: 'share',
+                    href: 'https://bruno-full-name.github.io/papervue/webCliente/#/',
+                }, function (response) {});
             }
         }
     }
