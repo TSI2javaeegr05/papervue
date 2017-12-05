@@ -29,7 +29,8 @@
                                               @infinite="infiniteHandler">
                                 <div slot="no-more">
                                     <div class="ui basic center aligned segment" style="padding: 0">
-                                        <h4 class="ui icon header small text-paperviu-e8" style="opacity: 0.6; margin: 0"><i
+                                        <h4 class="ui icon header small text-paperviu-e8"
+                                            style="opacity: 0.6; margin: 0"><i
                                                 class="comments icon text-paperviu-sky"></i>No hay m&aacute;s mensajes
                                         </h4>
                                     </div>
@@ -42,7 +43,8 @@
                                     </div>
                                 </div>
                             </infinite-loading>
-                            <div class="ui relaxed items" style="padding-bottom: 60px">
+                            <div class="ui relaxed items"
+                                 style="padding-bottom: 60px; padding-left: 7px; padding-right: 7px">
                                 <template v-for="mensaje in mensajes">
                                     <div v-if="mensaje.usuarioEmisor !== usuario.username"
                                          class="ui left aligned basic segment"

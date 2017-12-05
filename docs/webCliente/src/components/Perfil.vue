@@ -42,7 +42,8 @@
                                    placeholder="Vuelva a ingresar la password...">
                         </div>
                         <h3 class="ui header text-paperviu-e8" v-if="!facebook"><i
-                                class="info icon text-paperviu-sky"></i>Enviar Contrase&ntilde;a vacia para mantener la anterior.
+                                class="info icon text-paperviu-sky"></i>Enviar Contrase&ntilde;a vacia para mantener la
+                            anterior.
                         </h3>
                     </div>
                     <div class="ui basic center aligned segment paperviu-d7">
@@ -255,7 +256,10 @@
                     this.mostrarInfo("Enviando solicitud de amistad...");
                     $.post(this.enviarSolicitudAmistadURL, function (response) {
                         if (response !== undefined) {
-                            if (response === 1 || response === "1") _this.mostrarExito("Solicitud de amistad enviada!");
+                            if (response === 1 || response === "1") {
+                                _this.mostrarExito("Solicitud de amistad enviada!");
+                                _this.getSolicitudesAmistades();
+                            }
                             else if (response === 2 || response === "2") _this.mostrarAlerta("La solicitud o amistad ya existe");
                             else _this.mostrarError("No se pudo enviar la solicitud");
                         } else _this.mostrarError("No se pudo enviar solicitud de amistad");

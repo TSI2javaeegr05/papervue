@@ -17,7 +17,8 @@
                     <div v-show="!loadingCobro && totalCobro !== 0"
                          class="column text-paperviu-d7 paperviu-e4 border-left-paperviu-sky hover-text-paperviu-sky"
                          style="cursor: pointer; padding: 20px">
-                        <button @click="realizarCobro" class="ui big compact button paperviu-d7 hover-paperviu-dark text-paperviu-e8">
+                        <button v-if="btnRetiro" @click="realizarCobro"
+                                class="ui big compact button paperviu-d7 hover-paperviu-dark text-paperviu-e8">
                             <i class="paypal icon"></i>Cobrar
                         </button>
                     </div>
@@ -84,6 +85,7 @@
                 loadingCobro: true,
                 totalCobro: 0,
                 retiros: [],
+                btnRetiro: true,
                 pagina: 1,
                 estadisticasContenidosEmpresa: {
                     columns: [{
@@ -159,6 +161,7 @@
             },
             realizarCobro() {
                 if (this.empresa.nombre !== '') {
+                    this.btnRetiro = false;
                     var _this = this;
                     $.ajax({
                         type: 'PUT',
@@ -169,8 +172,10 @@
                             else if (respose === -3 || response === "-3") _this.mostrarAlerta("No hay saldo que retirar");
                             else if (response === -4 || response === "-4") _this.mostrarError("No se pudo efectuar el pago. Por favor vuelve a intentar...");
                             else _this.mostrarError("Error al efectuar el pago");
+                            _this.btnRetiro = true;
                         },
                         error: function () {
+                            _this.btnRetiro = true;
                             _this.mostrarError("No se pudo enviar la solicitud. Por favor vuelve a intentar...");
                         }
                     });
